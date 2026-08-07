@@ -4,106 +4,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Showtime - Live Game Shows</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #ffffff; -webkit-tap-highlight-color: transparent; }
-        .hero-gradient { background: linear-gradient(180deg, rgba(255,0,255,0.15) 0%, rgba(5,5,5,1) 100%); }
-        .magenta-glow { box-shadow: 0 0 30px rgba(255,0,255,0.4); }
-        .game-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .game-card:active { transform: scale(0.95); }
-        .img-container { background: #1a1a1a; position: relative; overflow: hidden; }
-        .loader-bg { background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); }
+        /* Standard CSS - Works Everywhere */
+        body { 
+            margin: 0; padding: 0; 
+            background-color: #050505; 
+            color: #ffffff; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex; justify-content: center;
+        }
+        .app-container {
+            width: 100%; max-width: 450px;
+            min-height: 100vh;
+            border-left: 1px solid #222; border-right: 1px solid #222;
+            display: flex; flex-direction: column;
+            background-color: #050505;
+        }
+        header {
+            padding: 20px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #222; position: sticky; top: 0; background: rgba(5,5,5,0.9); z-index: 10;
+        }
+        .logo { font-weight: 900; font-size: 22px; color: #ff00ff; letter-spacing: -1px; }
+        .live-tag { background: rgba(16, 185, 129, 0.1); color: #10b981; padding: 4px 10px; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+        
+        .hero {
+            position: relative; height: 300px;
+            background-image: linear-gradient(to bottom, transparent, #050505), url('https://www.casino.org/casinoscores/wp-content/uploads/2021/01/adventures-beyond-wonderland.jpg');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 25px;
+        }
+        .hero h2 { font-size: 28px; font-weight: 900; margin: 0; line-height: 1; }
+        .hero p { font-size: 12px; color: #aaa; margin: 10px 0 0; }
+        .hero-btn { margin-top: 15px; background: #ff00ff; color: white; padding: 15px; border-radius: 12px; font-weight: 800; text-align: center; text-decoration: none; font-size: 14px; text-transform: uppercase; box-shadow: 0 0 20px rgba(255,0,255,0.3); }
+
+        .section-title { padding: 25px 25px 10px; font-size: 11px; font-weight: 800; color: #555; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 25px 40px; }
+        .card { background: #111; border: 1px solid #222; border-radius: 15px; overflow: hidden; text-align: left; }
+        .card-img { height: 120px; background-size: cover; background-position: center; }
+        .card-info { padding: 12px; }
+        .card-tag { font-size: 9px; color: #666; font-weight: 700; text-transform: uppercase; }
+        .card-name { font-size: 12px; font-weight: 800; margin-top: 2px; }
+        .card-btn { margin-top: 10px; background: #222; color: #fff; padding: 8px; border-radius: 8px; text-align: center; font-size: 10px; font-weight: 700; text-decoration: none; display: block; border: 1px solid #333; }
+        
+        #loader { display: none; position: fixed; inset: 0; background: #000; z-index: 100; flex-direction: column; align-items: center; justify-content: center; }
+        .spinner { width: 40px; height: 40px; border: 4px solid rgba(255,0,255,0.2); border-top-color: #ff00ff; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center overflow-x-hidden">
+<body>
 
-    <!-- Cinematic Loader -->
-    <div id="loader" class="fixed inset-0 z-[100] loader-bg flex flex-col items-center justify-center hidden">
-        <div class="w-16 h-16 border-4 border-[#ff00ff]/20 border-t-[#ff00ff] rounded-full animate-spin mb-6"></div>
-        <div class="text-[#ff00ff] font-black text-xl tracking-tighter animate-pulse">CONNECTING...</div>
-    </div>
+    <div id="loader"><div class="spinner"></div><div style="color:#ff00ff; font-weight:900; letter-spacing:2px;">LAUNCHING...</div></div>
 
-    <div class="w-full max-w-md min-h-screen border-x border-zinc-900 flex flex-col bg-[#050505] pb-10">
-        
-        <!-- Header -->
-        <header class="p-6 flex justify-between items-center sticky top-0 bg-[#050505]/95 backdrop-blur-xl z-50 border-b border-zinc-900">
-            <h1 class="text-2xl font-black tracking-tighter text-[#ff00ff]">SHOWTIME</h1>
-            <span class="text-emerald-400 text-[10px] font-black uppercase tracking-widest px-2 py-1 bg-emerald-500/10 rounded">Live Now</span>
+    <div class="app-container">
+        <header>
+            <div class="logo">SHOWTIME</div>
+            <div class="live-tag">Live Now</div>
         </header>
 
-        <!-- Featured Hero (Adventures Beyond Wonderland) -->
-        <div class="relative h-80 w-full overflow-hidden hero-gradient flex items-end p-8 border-b border-zinc-900">
-            <img src="https://www.casino.org/casinoscores/wp-content/uploads/2021/01/adventures-beyond-wonderland.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60" alt="Wonderland">
-            <div class="relative z-10 w-full">
-                <span class="bg-red-600 text-white text-[9px] font-black px-2 py-1 rounded-sm mb-3 inline-block">ON AIR</span>
-                <h2 class="text-3xl font-black leading-tight tracking-tight drop-shadow-2xl">Adventures Beyond Wonderland</h2>
-                <button onclick="launchShow()" class="mt-4 w-full py-4 bg-[#ff00ff] text-white text-sm font-black rounded-xl uppercase tracking-widest magenta-glow">Enter the Show</button>
+        <div class="hero">
+            <div style="background: red; color: white; font-size: 9px; font-weight: 900; padding: 2px 6px; border-radius: 3px; display: inline-block; width: fit-content; margin-bottom: 8px;">ON AIR</div>
+            <h2>Adventures Beyond Wonderland</h2>
+            <p>12,403 watching • Potential Bonus</p>
+            <a href="#" onclick="launch()" class="hero-btn">Enter the Show</a>
+        </div>
+
+        <div class="section-title">Trending Shows</div>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://www.casino.org/casinoscores/wp-content/uploads/2020/12/mega-wheel.jpg')"></div>
+                <div class="card-info">
+                    <div class="card-tag">Pragmatic</div>
+                    <div class="card-name">Mega Wheel</div>
+                    <a href="#" onclick="launch()" class="card-btn">PLAY</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://www.casino.org/casinoscores/wp-content/uploads/2020/06/spin-a-win.jpg')"></div>
+                <div class="card-info">
+                    <div class="card-tag">Playtech</div>
+                    <div class="card-name">Spin A Win</div>
+                    <a href="#" onclick="launch()" class="card-btn">PLAY</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://www.casino.org/casinoscores/wp-content/uploads/2020/06/buffalo-blitz-live.jpg')"></div>
+                <div class="card-info">
+                    <div class="card-tag">Playtech</div>
+                    <div class="card-name">Buffalo Live</div>
+                    <a href="#" onclick="launch()" class="card-btn">PLAY</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://www.casino.org/casinoscores/wp-content/uploads/2020/12/lightning-roulette.jpg')"></div>
+                <div class="card-info">
+                    <div class="card-tag">Evolution</div>
+                    <div class="card-name">Lightning</div>
+                    <a href="#" onclick="launch()" class="card-btn">PLAY</a>
+                </div>
             </div>
         </div>
 
-        <div class="px-6 pt-8 pb-4">
-            <h3 class="text-xs font-black text-zinc-500 uppercase tracking-widest">Live Show Grid</h3>
+        <div style="padding: 20px; text-align: center; border-top: 1px solid #111;">
+            <div style="font-size: 9px; color: #444; font-weight: 800; letter-spacing: 2px;">SHOWTIME DISCOVERY PORTAL</div>
         </div>
-
-        <!-- Grid with Working Links -->
-        <div class="grid grid-cols-2 gap-4 px-6">
-            <!-- Mega Wheel -->
-            <button onclick="launchShow()" class="game-card bg-zinc-900/40 border border-zinc-800 rounded-2xl overflow-hidden text-left">
-                <div class="h-32 img-container">
-                    <img src="https://www.casino.org/casinoscores/wp-content/uploads/2020/12/mega-wheel.jpg" class="w-full h-full object-cover" alt="Mega Wheel">
-                </div>
-                <div class="p-4 bg-zinc-950">
-                    <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-tighter">PRAGMATIC</div>
-                    <div class="text-[11px] font-black mt-0.5 uppercase">Mega Wheel</div>
-                </div>
-            </button>
-            
-            <!-- Spin A Win -->
-            <button onclick="launchShow()" class="game-card bg-zinc-900/40 border border-zinc-800 rounded-2xl overflow-hidden text-left">
-                <div class="h-32 img-container">
-                    <img src="https://www.casino.org/casinoscores/wp-content/uploads/2020/06/spin-a-win.jpg" class="w-full h-full object-cover" alt="Spin a Win">
-                </div>
-                <div class="p-4 bg-zinc-950">
-                    <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-tighter">PLAYTECH</div>
-                    <div class="text-[11px] font-black mt-0.5 uppercase">Spin A Win</div>
-                </div>
-            </button>
-
-            <!-- Buffalo King Live -->
-            <button onclick="launchShow()" class="game-card bg-zinc-900/40 border border-zinc-800 rounded-2xl overflow-hidden text-left">
-                <div class="h-32 img-container">
-                    <img src="https://www.casino.org/casinoscores/wp-content/uploads/2020/06/buffalo-blitz-live.jpg" class="w-full h-full object-cover" alt="Buffalo Live">
-                </div>
-                <div class="p-4 bg-zinc-950">
-                    <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-tighter">PLAYTECH</div>
-                    <div class="text-[11px] font-black mt-0.5 uppercase">Buffalo Live</div>
-                </div>
-            </button>
-
-            <!-- Card Show -->
-            <button onclick="launchShow()" class="game-card bg-zinc-900/40 border border-zinc-800 rounded-2xl overflow-hidden text-left">
-                <div class="h-32 img-container">
-                    <img src="https://www.casino.org/casinoscores/wp-content/uploads/2020/12/lightning-roulette.jpg" class="w-full h-full object-cover" alt="Lightning">
-                </div>
-                <div class="p-4 bg-zinc-950">
-                    <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-tighter">EVOLUTION</div>
-                    <div class="text-[11px] font-black mt-0.5 uppercase">Lightning Show</div>
-                </div>
-            </button>
-        </div>
-
-        <footer class="mt-auto p-12 text-center">
-            <p class="text-[8px] text-zinc-800 font-bold uppercase tracking-[0.3em]">Showtime Live Discovery Portal</p>
-        </footer>
     </div>
 
     <script>
-        function launchShow() {
-            document.getElementById('loader').classList.remove('hidden');
+        function launch() {
+            document.getElementById('loader').style.display = 'flex';
             setTimeout(() => {
                 window.location.href = "https://www.mcluck.com/lp/raf?r=6f535be9%2F2810840932";
-            }, 1000);
+            }, 1200);
         }
     </script>
 </body>
