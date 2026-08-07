@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Showtime - Live Game Show Discovery</title>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
+    <title>Showtime - Live Game Shows</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        @import url('[https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap'](https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap'));
         body { font-family: 'Inter', sans-serif; background-color: #050505; color: #ffffff; -webkit-tap-highlight-color: transparent; }
         .hero-gradient { background: linear-gradient(180deg, rgba(255,0,255,0.15) 0%, rgba(5,5,5,1) 100%); }
         .magenta-glow { box-shadow: 0 0 30px rgba(255,0,255,0.4); }
         .game-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .game-card:active { transform: scale(0.95); filter: brightness(1.2); }
+        .game-card:active { transform: scale(0.95); }
+        .img-container { background: #1a1a1a; position: relative; overflow: hidden; }
         .loader-bg { background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); }
     </style>
 </head>
@@ -23,89 +21,15 @@
     <!-- Cinematic Loader -->
     <div id="loader" class="fixed inset-0 z-[100] loader-bg flex flex-col items-center justify-center hidden">
         <div class="w-16 h-16 border-4 border-[#ff00ff]/20 border-t-[#ff00ff] rounded-full animate-spin mb-6"></div>
-        <div class="text-[#ff00ff] font-black text-xl tracking-tighter animate-pulse uppercase">Connecting...</div>
-        <p class="text-zinc-500 text-[10px] mt-2 uppercase tracking-[0.3em]">Launching Showtime Stream</p>
+        <div class="text-[#ff00ff] font-black text-xl tracking-tighter animate-pulse">CONNECTING...</div>
     </div>
 
     <div class="w-full max-w-md min-h-screen border-x border-zinc-900 flex flex-col bg-[#050505] pb-10">
         
         <!-- Header -->
         <header class="p-6 flex justify-between items-center sticky top-0 bg-[#050505]/95 backdrop-blur-xl z-50 border-b border-zinc-900">
-            <h1 class="text-2xl font-extrabold tracking-tighter text-[#ff00ff]">SHOWTIME</h1>
-            <div class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <span class="text-emerald-400 text-[10px] font-black uppercase tracking-widest">Live Now</span>
-            </div>
+            <h1 class="text-2xl font-black tracking-tighter text-[#ff00ff]">SHOWTIME</h1>
+            <span class="text-emerald-400 text-[10px] font-black uppercase tracking-widest px-2 py-1 bg-emerald-500/10 rounded">Live Now</span>
         </header>
 
-        <!-- Featured Hero -->
-        <div class="relative h-72 w-full overflow-hidden hero-gradient flex items-end p-8 border-b border-zinc-900">
-            <div class="absolute inset-0 bg-cover bg-center opacity-70" style="background-image: url('https://static.mcluck.com/game-assets/playtech/adventures-beyond-wonderland-live/thumbnail.jpg');"></div>
-            <div class="relative z-10 w-full">
-                <span class="bg-red-600 text-white text-[9px] font-black px-2 py-1 rounded-sm mb-3 inline-block tracking-tighter">FEATURED SHOW</span>
-                <h2 class="text-3xl font-black leading-tight tracking-tight shadow-black drop-shadow-xl">Adventures Beyond Wonderland</h2>
-                <button onclick="launchShow()" class="mt-4 w-full py-4 bg-[#ff00ff] text-white text-sm font-black rounded-xl uppercase tracking-widest magenta-glow">Enter the Show</button>
-            </div>
-        </div>
-
-        <div class="px-6 pt-8 pb-4">
-            <h3 class="text-xs font-black text-zinc-500 uppercase tracking-widest">Trending Now</h3>
-        </div>
-
-        <!-- Game Grid with Real Artwork -->
-        <div class="grid grid-cols-2 gap-4 px-6">
-            <!-- Mega Wheel -->
-            <button onclick="launchShow()" class="game-card bg-zinc-900/40 border border-zinc-800 rounded-2xl overflow-hidden text-left">
-                <div class="h-32 bg-cover bg-center" style="background-image: url('https://static.mcluck.com/game-assets/pragmatic-play/mega-wheel/tile.jpg');"></div>
-                <div class="p-4 bg-zinc-950">
-                    <div class="text-[9px] font-bold text-zinc-500 uppercase">PRAGMATIC</div>
-                    <div class="text-[11px] font-black mt-0.5">MEGA WHEEL</div>
-                </div>
-            </button>
-            <!-- Spin A Win -->
-            <button onclick="launchShow()" class="game-card bg-zinc-900/40 border border-zinc-800 rounded-2xl overflow-hidden text-left">
-                <div class="h-32 bg-cover bg-center" style="background-image: url('https://static.mcluck.com/game-assets/playtech/live-spin-a-win/tile.jpg');"></div>
-                <div class="p-4 bg-zinc-950">
-                    <div class="text-[9px] font-bold text-zinc-500 uppercase">PLAYTECH</div>
-                    <div class="text-[11px] font-black mt-0.5">SPIN A WIN</div>
-                </div>
-            </button>
-            <!-- Buffalo King Live -->
-            <button onclick="launchShow()" class="game-card bg-zinc-900/40 border border-zinc-800 rounded-2xl overflow-hidden text-left">
-                <div class="h-32 bg-cover bg-center" style="background-image: url('https://static.mcluck.com/game-assets/playtech/buffalo-blitz-live-slots/tile.jpg');"></div>
-                <div class="p-4 bg-zinc-950">
-                    <div class="text-[9px] font-bold text-zinc-500 uppercase">PLAYTECH</div>
-                    <div class="text-[11px] font-black mt-0.5">BUFFALO LIVE</div>
-                </div>
-            </button>
-            <!-- Stock Market Live -->
-            <button onclick="launchShow()" class="game-card bg-zinc-900/40 border border-zinc-800 rounded-2xl overflow-hidden text-left">
-                <div class="h-32 bg-cover bg-center" style="background-image: url('https://static.mcluck.com/game-assets/playtech/the-greatest-cards-show-live/tile.jpg');"></div>
-                <div class="p-4 bg-zinc-950">
-                    <div class="text-[9px] font-bold text-zinc-500 uppercase">PLAYTECH</div>
-                    <div class="text-[11px] font-black mt-0.5">CARDS SHOW</div>
-                </div>
-            </button>
-        </div>
-
-        <div class="mx-6 p-4 bg-zinc-900/30 border border-zinc-800/50 rounded-xl mt-8">
-            <p class="text-[10px] text-zinc-500 text-center leading-relaxed">
-                Add to Home Screen for the full app experience. 18+ Only.
-            </p>
-        </div>
-
-        <footer class="mt-auto p-8 text-center">
-            <p class="text-[9px] text-zinc-800 font-bold uppercase tracking-[0.2em]">Showtime Discovery Portal</p>
-        </footer>
-    </div>
-
-    <script>
-        function launchShow() {
-            document.getElementById('loader').classList.remove('hidden');
-            setTimeout(() => {
-                window.location.href = "https://www.mcluck.com/lp/raf?r=6f535be9%2F2810840932";
-            }, 1200);
-        }
-    </script>
-</body>
-</html>
+        <!-- Featured Hero (Ad
