@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showtime - Live Game Show Discovery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #ffffff; }
+        .hero-gradient { background: linear-gradient(180deg, rgba(255,0,255,0.1) 0%, rgba(5,5,5,1) 100%); }
+        .magenta-glow { box-shadow: 0 0 20px rgba(255,0,255,0.3); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center">
+    <!-- App Container -->
+    <div class="w-full max-w-md min-h-screen border-x border-zinc-800 flex flex-col bg-[#050505]">
+        
+        <!-- Header -->
+        <header class="p-5 flex justify-between items-center sticky top-0 bg-[#050505]/90 backdrop-blur-md z-50 border-b border-zinc-800">
+            <h1 class="text-2xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-magenta-500 to-pink-500" style="color: #ff00ff;">SHOWTIME</h1>
+            <div class="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-xs font-bold uppercase tracking-widest">US-Legal</div>
+        </header>
+
+        <!-- Hero Section -->
+        <div class="relative h-56 w-full overflow-hidden hero-gradient flex items-end p-6 border-b border-zinc-800">
+            <div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?auto=format&fit=crop&w=800&q=80');"></div>
+            <div class="relative z-10">
+                <span class="bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-sm mb-2 inline-block animate-pulse">ON AIR</span>
+                <h2 class="text-2xl font-bold leading-none">Adventures Beyond Wonderland</h2>
+                <p class="text-zinc-400 text-xs mt-1">12,403 watching • Huge Win Potential</p>
+            </div>
+        </div>
+
+        <!-- Catalog Filters -->
+        <div class="flex gap-2 px-5 py-4 overflow-x-auto whitespace-nowrap scrollbar-hide">
+            <span class="px-4 py-1.5 bg-[#ff00ff] text-white rounded-full text-xs font-semibold magenta-glow">All Shows</span>
+            <span class="px-4 py-1.5 bg-zinc-900 text-zinc-400 rounded-full text-xs font-semibold border border-zinc-800">Big Wheels</span>
+            <span class="px-4 py-1.5 bg-zinc-900 text-zinc-400 rounded-full text-xs font-semibold border border-zinc-800">Live Slots</span>
+        </div>
+
+        <!-- Game Grid -->
+        <div class="grid grid-cols-2 gap-4 p-5">
+            <!-- Game 1 -->
+            <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden group hover:border-[#ff00ff] transition-all">
+                <div class="h-28 bg-zinc-800 relative">
+                    <div class="absolute top-2 right-2 bg-black/60 text-yellow-400 text-[9px] font-bold px-1.5 py-0.5 rounded">500x RECENT</div>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-bold text-xs">Mega Wheel</h3>
+                    <a href="https://www.mcluck.com/lp/raf?r=6f535be9%2F2810840932" target="_blank" class="mt-2 w-full py-2 bg-[#ff00ff] text-white text-[10px] font-black rounded-lg text-center block">PLAY NOW</a>
+                </div>
+            </div>
+            <!-- Game 2 -->
+            <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden group hover:border-[#ff00ff] transition-all">
+                <div class="h-28 bg-zinc-800 relative">
+                    <div class="absolute top-2 right-2 bg-emerald-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">HOT</div>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-bold text-xs">Spin A Win</h3>
+                    <a href="https://www.mcluck.com/lp/raf?r=6f535be9%2F2810840932" target="_blank" class="mt-2 w-full py-2 bg-[#ff00ff] text-white text-[10px] font-black rounded-lg text-center block">PLAY NOW</a>
+                </div>
+            </div>
+            <!-- Game 3 -->
+            <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden group hover:border-[#ff00ff] transition-all">
+                <div class="h-28 bg-zinc-800 relative"></div>
+                <div class="p-3">
+                    <h3 class="font-bold text-xs">Buffalo King Live</h3>
+                    <a href="https://www.mcluck.com/lp/raf?r=6f535be9%2F2810840932" target="_blank" class="mt-2 w-full py-2 bg-[#ff00ff] text-white text-[10px] font-black rounded-lg text-center block">PLAY NOW</a>
+                </div>
+            </div>
+            <!-- Game 4 -->
+            <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden group hover:border-[#ff00ff] transition-all">
+                <div class="h-28 bg-zinc-800 relative"></div>
+                <div class="p-3">
+                    <h3 class="font-bold text-xs">Stock Market Live</h3>
+                    <a href="https://www.mcluck.com/lp/raf?r=6f535be9%2F2810840932" target="_blank" class="mt-2 w-full py-2 bg-[#ff00ff] text-white text-[10px] font-black rounded-lg text-center block">PLAY NOW</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Compliance Footer -->
+        <footer class="mt-auto p-8 border-t border-zinc-800 text-center">
+            <p class="text-[10px] text-zinc-500 leading-relaxed uppercase tracking-widest font-bold">
+                Showtime is a discovery portal. 18+ Only.<br>
+                Please play responsibly.<br>
+                National Helpline: 1-800-GAMBLER
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
