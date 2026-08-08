@@ -5,110 +5,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>GAMESHOWS LIVE</title>
     <style>
-        /* Bulletproof Professional Design */
-        body { 
-            margin: 0; padding: 0; background-color: #050505; color: white; 
-            font-family: -apple-system, sans-serif; display: flex; justify-content: center;
+        /* Premium Cinematic Theme (v0 Style) */
+        :root {
+            --light-blue: #87CEEB;
+            --midnight: #050505;
+            --card-bg: #111111;
+            --zinc-500: #71717a;
+            --magenta: #ff00ff;
         }
+
+        body { 
+            margin: 0; padding: 0; background-color: var(--midnight); color: white; 
+            font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+            display: flex; justify-content: center; -webkit-font-smoothing: antialiased;
+        }
+
         .app-container {
             width: 100%; max-width: 450px; min-height: 100vh;
-            border-left: 1px solid #222; border-right: 1px solid #222;
-            display: flex; flex-direction: column; background-color: #050505;
+            border-x: 1px solid #1a1a1a; display: flex; flex-direction: column;
+            background-color: var(--midnight);
         }
-        header {
-            padding: 20px; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid #222; position: sticky; top: 0; background: rgba(5,5,5,0.95); z-index: 10;
-        }
-        /* Your Light Blue Title */
-        .logo { font-weight: 900; font-size: 24px; color: #00CCFF; letter-spacing: 1px; text-transform: uppercase; }
-        
-        .live-tag { color: #10b981; font-size: 10px; font-weight: 800; border: 1px solid #10b981; padding: 3px 8px; border-radius: 4px; }
-        
-        /* Hero Section with Picture */
-        .hero {
-            position: relative; height: 350px; border-bottom: 1px solid #222;
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 25px;
-            background-color: #111;
-        }
-        .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
-        .hero-content { position: relative; z-index: 2; }
-        .hero-btn { margin-top: 15px; background: #ff00ff; color: white; padding: 18px; border-radius: 12px; font-weight: 800; text-align: center; text-decoration: none; display: block; font-size: 14px; box-shadow: 0 0 25px rgba(255,0,255,0.4); }
 
-        .section-title { padding: 30px 25px 15px; font-size: 12px; font-weight: 800; color: #666; text-transform: uppercase; letter-spacing: 2px; }
+        header {
+            padding: 24px 20px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #1a1a1a; sticky: top; background: rgba(5,5,5,0.9); backdrop-filter: blur(10px); z-index: 50;
+        }
+
+        .logo { font-weight: 900; font-size: 26px; color: var(--light-blue); letter-spacing: -0.5px; }
         
-        /* Grid with Working Pictures */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px 50px; }
-        .card { background: #111; border: 1px solid #222; border-radius: 15px; overflow: hidden; display: flex; flex-direction: column; }
-        .card-img { width: 100%; height: 120px; object-fit: cover; border-bottom: 1px solid #222; }
-        .card-info { padding: 15px; }
-        .card-name { font-size: 12px; font-weight: 800; margin-bottom: 12px; height: 30px; display: flex; align-items: center; }
-        .card-btn { background: #ff00ff; color: white; padding: 12px; border-radius: 8px; text-align: center; font-size: 11px; font-weight: 800; text-decoration: none; display: block; }
+        .live-tag { color: #10b981; font-size: 10px; font-weight: 800; border: 1px solid #10b981; padding: 2px 8px; border-radius: 99px; }
+        
+        /* Hero Section */
+        .hero {
+            position: relative; height: 380px; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;
+        }
+        .hero-img { 
+            position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; 
+            background-image: url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?auto=format&fit=crop&w=800&q=80');
+            filter: brightness(0.6);
+        }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, var(--midnight) 100%); }
+        .hero-content { position: relative; z-index: 10; }
+        .hero-btn { 
+            margin-top: 20px; background: var(--light-blue); color: #000; padding: 18px; 
+            border-radius: 14px; font-weight: 900; text-align: center; text-decoration: none; 
+            display: block; font-size: 15px; letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(135, 206, 235, 0.3);
+        }
+
+        .section-title { padding: 35px 25px 15px; font-size: 11px; font-weight: 800; color: var(--zinc-500); text-transform: uppercase; letter-spacing: 2px; }
+        
+        /* Premium Grid */
+        .grid { display: grid; grid-cols: 2; gap: 15px; padding: 0 20px 60px; display: grid; grid-template-columns: 1fr 1fr; }
+        .card { 
+            background: var(--card-bg); border: 1px solid #1f1f1f; border-radius: 20px; 
+            overflow: hidden; display: flex; flex-direction: column;
+            transition: transform 0.2s ease;
+        }
+        .card:active { transform: scale(0.96); }
+        .card-img { height: 130px; background-size: cover; background-position: center; filter: contrast(1.1); }
+        .card-info { padding: 16px; background: linear-gradient(180deg, #161616 0%, #0a0a0a 100%); }
+        .card-name { font-size: 12px; font-weight: 800; margin-bottom: 12px; height: 32px; display: flex; align-items: center; color: #efeff1; }
+        .card-btn { 
+            background: rgba(135, 206, 235, 0.1); color: var(--light-blue); padding: 10px; 
+            border-radius: 10px; text-align: center; font-size: 11px; font-weight: 800; 
+            text-decoration: none; display: block; border: 1px solid var(--light-blue);
+        }
         
         #loader { display: none; position: fixed; inset: 0; background: #000; z-index: 100; flex-direction: column; align-items: center; justify-content: center; }
-        .spinner { width: 50px; height: 50px; border: 5px solid rgba(255,0,255,0.1); border-top-color: #ff00ff; border-radius: 50%; animation: spin 1s linear infinite; }
+        .spinner { width: 40px; height: 40px; border: 3px solid rgba(135, 206, 235, 0.1); border-top-color: var(--light-blue); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <div id="loader"><div class="spinner"></div><div style="color:#ff00ff; font-weight:900; margin-top:20px; letter-spacing:3px;">LAUNCHING...</div></div>
+    <div id="loader"><div class="spinner"></div><div style="color:var(--light-blue); font-weight:900; margin-top:20px; letter-spacing:4px; font-size:12px;">LOADING SHOW...</div></div>
 
     <div class="app-container">
         <header>
             <div class="logo">GAMESHOWS</div>
-            <div class="live-tag">LIVE NOW</div>
+            <div class="live-tag">ONLINE</div>
         </header>
 
-        <!-- Main Hero with Adventures Beyond Wonderland -->
+        <!-- Hero Section -->
         <div class="hero">
-            <img src="https://static.casino.guru/images/games/600/adventures-beyond-wonderland.jpg" class="hero-img">
-            <div style="position:absolute; inset:0; background: linear-gradient(transparent, #050505);"></div>
+            <div class="hero-img"></div>
+            <div class="hero-overlay"></div>
             <div class="hero-content">
-                <div style="background: red; color: white; font-size: 9px; font-weight: 900; padding: 2px 6px; border-radius: 3px; display: inline-block; margin-bottom: 10px;">TOP SHOW</div>
-                <div style="font-size: 32px; font-weight: 900; line-height: 1;">Adventures Beyond Wonderland</div>
+                <div style="background: var(--magenta); color: white; font-size: 9px; font-weight: 900; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 12px; letter-spacing: 1px;">FEATURED</div>
+                <div style="font-size: 34px; font-weight: 900; line-height: 0.95; letter-spacing: -1px;">Adventures<br>Beyond<br>Wonderland</div>
                 <a href="#" onclick="launch()" class="hero-btn">ENTER THE SHOW</a>
             </div>
         </div>
 
-        <div class="section-title">Trending Shows</div>
+        <div class="section-title">Discovery Grid</div>
 
         <div class="grid">
             <!-- Mega Wheel -->
             <div class="card">
-                <img src="https://static.casino.guru/images/games/600/mega-wheel.jpg" class="card-img">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1518133835878-5a93cc3f89e5?auto=format&fit=crop&w=400&q=80')"></div>
                 <div class="card-info">
                     <div class="card-name">MEGA WHEEL</div>
-                    <a href="#" onclick="launch()" class="card-btn">PLAY</a>
+                    <a href="#" onclick="launch()" class="card-btn">PLAY NOW</a>
                 </div>
             </div>
             <!-- Spin A Win -->
             <div class="card">
-                <img src="https://static.casino.guru/images/games/600/spin-a-win.jpg" class="card-img">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&w=400&q=80')"></div>
                 <div class="card-info">
                     <div class="card-name">SPIN A WIN</div>
-                    <a href="#" onclick="launch()" class="card-btn">PLAY</a>
+                    <a href="#" onclick="launch()" class="card-btn">PLAY NOW</a>
                 </div>
             </div>
-            <!-- Buffalo Blitz Live -->
+            <!-- Buffalo Live -->
             <div class="card">
-                <img src="https://static.casino.guru/images/games/600/buffalo-blitz-live.jpg" class="card-img">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1508197149814-0cc02e8b7f74?auto=format&fit=crop&w=400&q=80')"></div>
                 <div class="card-info">
                     <div class="card-name">BUFFALO LIVE</div>
-                    <a href="#" onclick="launch()" class="card-btn">PLAY</a>
+                    <a href="#" onclick="launch()" class="card-btn">PLAY NOW</a>
                 </div>
             </div>
-            <!-- Lightning Show -->
+            <!-- Stock Market -->
             <div class="card">
-                <img src="https://static.casino.guru/images/games/600/lightning-roulette.jpg" class="card-img">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1611974717483-360341818274?auto=format&fit=crop&w=400&q=80')"></div>
                 <div class="card-info">
-                    <div class="card-name">LIGHTNING</div>
-                    <a href="#" onclick="launch()" class="card-btn">PLAY</a>
+                    <div class="card-name">STREET SHOW</div>
+                    <a href="#" onclick="launch()" class="card-btn">PLAY NOW</a>
                 </div>
             </div>
         </div>
 
-        <footer style="padding: 50px 20px; text-align: center; color: #333; font-size: 10px; font-weight: 800; border-top: 1px solid #111; letter-spacing: 1px;">
-            GAMESHOWS DISCOVERY • 18+ ONLY
+        <footer style="padding: 60px 20px; text-align: center; color: #222; font-size: 10px; font-weight: 900; border-top: 1px solid #111; letter-spacing: 2px;">
+            POWERED BY SHOWTIME TECHNOLOGY
         </footer>
     </div>
 
