@@ -2,80 +2,123 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>GAMESHOWS LIVE</title>
-</head>
-<body style="margin:0; padding:0; background-color:#050505; color:white; font-family:sans-serif; display:flex; justify-content:center;">
-
-    <div style="width:100%; max-width:450px; background-color:#050505; min-height:100vh; border-left:1px solid #222; border-right:1px solid #222;">
+    <style>
+        /* Bulletproof Professional Design */
+        body { 
+            margin: 0; padding: 0; background-color: #050505; color: white; 
+            font-family: -apple-system, sans-serif; display: flex; justify-content: center;
+        }
+        .app-container {
+            width: 100%; max-width: 450px; min-height: 100vh;
+            border-left: 1px solid #222; border-right: 1px solid #222;
+            display: flex; flex-direction: column; background-color: #050505;
+        }
+        header {
+            padding: 20px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #222; position: sticky; top: 0; background: rgba(5,5,5,0.95); z-index: 10;
+        }
+        /* Your Light Blue Title */
+        .logo { font-weight: 900; font-size: 24px; color: #00CCFF; letter-spacing: 1px; text-transform: uppercase; }
         
-        <!-- Light Blue Header -->
-        <div style="padding:20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #222;">
-            <div style="font-weight:900; font-size:24px; color:#87CEEB; letter-spacing:1px;">GAMESHOWS</div>
-            <div style="color:#10b981; font-size:10px; font-weight:800; border:1px solid #10b981; padding:3px 8px; border-radius:4px;">LIVE NOW</div>
-        </div>
+        .live-tag { color: #10b981; font-size: 10px; font-weight: 800; border: 1px solid #10b981; padding: 3px 8px; border-radius: 4px; }
+        
+        /* Hero Section with Picture */
+        .hero {
+            position: relative; height: 350px; border-bottom: 1px solid #222;
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 25px;
+            background-color: #111;
+        }
+        .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-btn { margin-top: 15px; background: #ff00ff; color: white; padding: 18px; border-radius: 12px; font-weight: 800; text-align: center; text-decoration: none; display: block; font-size: 14px; box-shadow: 0 0 25px rgba(255,0,255,0.4); }
 
-        <!-- Featured Show -->
-        <div style="padding:20px; border-bottom:1px solid #222;">
-            <div style="background:red; color:white; font-size:9px; font-weight:900; padding:2px 6px; border-radius:3px; display:inline-block; margin-bottom:10px;">TOP SHOW</div>
-            <div style="font-size:26px; font-weight:900; margin-bottom:15px;">Adventures Beyond Wonderland</div>
-            
-            <!-- Hero Image -->
-            <img src="https://www.casino.org/casinoscores/wp-content/uploads/2021/01/adventures-beyond-wonderland.jpg" style="width:100%; border-radius:12px; margin-bottom:15px; border:1px solid #333;">
-            
-            <a href="https://www.mcluck.com/lp/raf?r=6f535be9%2F2810840932" style="background:#ff00ff; color:white; padding:18px; border-radius:12px; font-weight:800; text-align:center; text-decoration:none; display:block; font-size:14px;">ENTER THE SHOW</a>
-        </div>
+        .section-title { padding: 30px 25px 15px; font-size: 12px; font-weight: 800; color: #666; text-transform: uppercase; letter-spacing: 2px; }
+        
+        /* Grid with Working Pictures */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px 50px; }
+        .card { background: #111; border: 1px solid #222; border-radius: 15px; overflow: hidden; display: flex; flex-direction: column; }
+        .card-img { width: 100%; height: 120px; object-fit: cover; border-bottom: 1px solid #222; }
+        .card-info { padding: 15px; }
+        .card-name { font-size: 12px; font-weight: 800; margin-bottom: 12px; height: 30px; display: flex; align-items: center; }
+        .card-btn { background: #ff00ff; color: white; padding: 12px; border-radius: 8px; text-align: center; font-size: 11px; font-weight: 800; text-decoration: none; display: block; }
+        
+        #loader { display: none; position: fixed; inset: 0; background: #000; z-index: 100; flex-direction: column; align-items: center; justify-content: center; }
+        .spinner { width: 50px; height: 50px; border: 5px solid rgba(255,0,255,0.1); border-top-color: #ff00ff; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
 
-        <div style="padding:20px 20px 10px; font-size:12px; font-weight:800; color:#666; letter-spacing:2px;">TRENDING SHOWS</div>
+    <div id="loader"><div class="spinner"></div><div style="color:#ff00ff; font-weight:900; margin-top:20px; letter-spacing:3px;">LAUNCHING...</div></div>
 
-        <!-- Game Grid using a Table for maximum stability -->
-        <div style="padding:0 20px 40px;">
-            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
-                
-                <!-- Mega Wheel -->
-                <div style="flex: 1 1 45%; background:#111; border:1px solid #222; border-radius:15px; overflow:hidden;">
-                    <img src="https://www.casino.org/casinoscores/wp-content/uploads/2020/12/mega-wheel.jpg" style="width:100%; height:100px; object-fit:cover;">
-                    <div style="padding:10px;">
-                        <div style="font-size:11px; font-weight:900; margin-bottom:10px;">MEGA WHEEL</div>
-                        <a href="https://www.mcluck.com/lp/raf?r=6f535be9%2F2810840932" style="background:#ff00ff; color:white; padding:8px; border-radius:6px; text-align:center; text-decoration:none; display:block; font-size:10px; font-weight:800;">PLAY</a>
-                    </div>
-                </div>
+    <div class="app-container">
+        <header>
+            <div class="logo">GAMESHOWS</div>
+            <div class="live-tag">LIVE NOW</div>
+        </header>
 
-                <!-- Spin A Win -->
-                <div style="flex: 1 1 45%; background:#111; border:1px solid #222; border-radius:15px; overflow:hidden;">
-                    <img src="https://www.casino.org/casinoscores/wp-content/uploads/2020/06/spin-a-win.jpg" style="width:100%; height:100px; object-fit:cover;">
-                    <div style="padding:10px;">
-                        <div style="font-size:11px; font-weight:900; margin-bottom:10px;">SPIN A WIN</div>
-                        <a href="https://www.mcluck.com/lp/raf?r=6f535be9%2F2810840932" style="background:#ff00ff; color:white; padding:8px; border-radius:6px; text-align:center; text-decoration:none; display:block; font-size:10px; font-weight:800;">PLAY</a>
-                    </div>
-                </div>
-
-                <!-- Buffalo Live -->
-                <div style="flex: 1 1 45%; background:#111; border:1px solid #222; border-radius:15px; overflow:hidden;">
-                    <img src="https://www.casino.org/casinoscores/wp-content/uploads/2020/06/buffalo-blitz-live.jpg" style="width:100%; height:100px; object-fit:cover;">
-                    <div style="padding:10px;">
-                        <div style="font-size:11px; font-weight:900; margin-bottom:10px;">BUFFALO LIVE</div>
-                        <a href="https://www.mcluck.com/lp/raf?r=6f535be9%2F2810840932" style="background:#ff00ff; color:white; padding:8px; border-radius:6px; text-align:center; text-decoration:none; display:block; font-size:10px; font-weight:800;">PLAY</a>
-                    </div>
-                </div>
-
-                <!-- Lightning -->
-                <div style="flex: 1 1 45%; background:#111; border:1px solid #222; border-radius:15px; overflow:hidden;">
-                    <img src="https://www.casino.org/casinoscores/wp-content/uploads/2020/12/lightning-roulette.jpg" style="width:100%; height:100px; object-fit:cover;">
-                    <div style="padding:10px;">
-                        <div style="font-size:11px; font-weight:900; margin-bottom:10px;">LIGHTNING</div>
-                        <a href="https://www.mcluck.com/lp/raf?r=6f535be9%2F2810840932" style="background:#ff00ff; color:white; padding:8px; border-radius:6px; text-align:center; text-decoration:none; display:block; font-size:10px; font-weight:800;">PLAY</a>
-                    </div>
-                </div>
-
+        <!-- Main Hero with Adventures Beyond Wonderland -->
+        <div class="hero">
+            <img src="https://static.casino.guru/images/games/600/adventures-beyond-wonderland.jpg" class="hero-img">
+            <div style="position:absolute; inset:0; background: linear-gradient(transparent, #050505);"></div>
+            <div class="hero-content">
+                <div style="background: red; color: white; font-size: 9px; font-weight: 900; padding: 2px 6px; border-radius: 3px; display: inline-block; margin-bottom: 10px;">TOP SHOW</div>
+                <div style="font-size: 32px; font-weight: 900; line-height: 1;">Adventures Beyond Wonderland</div>
+                <a href="#" onclick="launch()" class="hero-btn">ENTER THE SHOW</a>
             </div>
         </div>
 
-        <div style="padding:40px; text-align:center; color:#444; font-size:9px; font-weight:800; letter-spacing:1px; border-top:1px solid #111;">
-            GAMESHOWS DISCOVERY • 18+ ONLY
+        <div class="section-title">Trending Shows</div>
+
+        <div class="grid">
+            <!-- Mega Wheel -->
+            <div class="card">
+                <img src="https://static.casino.guru/images/games/600/mega-wheel.jpg" class="card-img">
+                <div class="card-info">
+                    <div class="card-name">MEGA WHEEL</div>
+                    <a href="#" onclick="launch()" class="card-btn">PLAY</a>
+                </div>
+            </div>
+            <!-- Spin A Win -->
+            <div class="card">
+                <img src="https://static.casino.guru/images/games/600/spin-a-win.jpg" class="card-img">
+                <div class="card-info">
+                    <div class="card-name">SPIN A WIN</div>
+                    <a href="#" onclick="launch()" class="card-btn">PLAY</a>
+                </div>
+            </div>
+            <!-- Buffalo Blitz Live -->
+            <div class="card">
+                <img src="https://static.casino.guru/images/games/600/buffalo-blitz-live.jpg" class="card-img">
+                <div class="card-info">
+                    <div class="card-name">BUFFALO LIVE</div>
+                    <a href="#" onclick="launch()" class="card-btn">PLAY</a>
+                </div>
+            </div>
+            <!-- Lightning Show -->
+            <div class="card">
+                <img src="https://static.casino.guru/images/games/600/lightning-roulette.jpg" class="card-img">
+                <div class="card-info">
+                    <div class="card-name">LIGHTNING</div>
+                    <a href="#" onclick="launch()" class="card-btn">PLAY</a>
+                </div>
+            </div>
         </div>
 
+        <footer style="padding: 50px 20px; text-align: center; color: #333; font-size: 10px; font-weight: 800; border-top: 1px solid #111; letter-spacing: 1px;">
+            GAMESHOWS DISCOVERY • 18+ ONLY
+        </footer>
     </div>
 
+    <script>
+        function launch() {
+            document.getElementById('loader').style.display = 'flex';
+            setTimeout(() => {
+                window.location.href = "https://www.mcluck.com/lp/raf?r=6f535be9%2F2810840932";
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
