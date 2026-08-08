@@ -8,44 +8,75 @@
         :root { --light-blue: #87CEEB; --midnight: #050505; --card-bg: #111111; --border: #1f1f1f; }
         body { margin: 0; padding: 0; background-color: var(--midnight); color: white; font-family: -apple-system, sans-serif; display: flex; justify-content: center; -webkit-font-smoothing: antialiased; }
         .app-container { width: 100%; max-width: 480px; min-height: 100vh; border-x: 1px solid var(--border); display: flex; flex-direction: column; background-color: var(--midnight); }
-        @media (min-width: 1024px) { .app-container { max-width: 1100px; } .grid { grid-template-columns: repeat(4, 1fr) !important; } }
-        header { padding: 24px 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(5,5,5,0.95); position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
-        .logo { font-weight: 900; font-size: 28px; color: var(--light-blue); letter-spacing: -0.5px; text-transform: uppercase; }
+        @media (min-width: 1024px) { .app-container { max-width: 1000px; } .grid { grid-template-columns: repeat(4, 1fr) !important; } }
+        
+        header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: rgba(5,5,5,0.9); position: sticky; top: 0; z-index: 50; }
+        .logo { font-weight: 900; font-size: 26px; color: var(--light-blue); letter-spacing: -0.5px; text-transform: uppercase; }
+        
+        /* Wallet UI */
+        .wallet-pill { background: rgba(135, 206, 235, 0.1); border: 1px solid rgba(135, 206, 235, 0.3); padding: 6px 14px; border-radius: 99px; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s; }
+        .coin-icon { width: 14px; height: 14px; background: #FFD700; border-radius: 50%; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        .balance-text { font-size: 13px; font-weight: 800; color: var(--light-blue); }
+
+        /* Modal UI */
+        #walletModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+        .modal-card { background: #111; border: 1px solid #222; border-radius: 24px; width: 100%; max-width: 380px; padding: 30px; text-align: center; }
+        .pack-item { background: #1a1a1a; border: 1px solid #333; padding: 16px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-top: 12px; transition: 0.2s; }
+        .pack-item:hover { border-color: var(--light-blue); }
+        .pack-price { font-weight: 900; color: var(--light-blue); }
+
         .search-input { width: calc(100% - 40px); background: #151515; border: 1px solid #333; padding: 14px; border-radius: 14px; color: white; margin: 15px 20px; font-size: 14px; box-sizing: border-box; outline: none; }
         .catalog { display: flex; gap: 10px; padding: 10px 20px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
-        .cat-btn { padding: 10px 22px; background: #151515; border: 1px solid #333; border-radius: 99px; font-size: 11px; font-weight: 800; color: #777; cursor: pointer; transition: 0.2s; border: none; }
-        .cat-btn.active { background: var(--light-blue); color: #000; box-shadow: 0 4px 15px rgba(135, 206, 235, 0.2); }
+        .cat-btn { padding: 10px 22px; background: #151515; border: 1px solid #333; border-radius: 99px; font-size: 11px; font-weight: 800; color: #777; cursor: pointer; border: none; }
+        .cat-btn.active { background: var(--light-blue); color: #000; }
+
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 15px 20px 80px; }
         .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s; }
         .card:hover { transform: translateY(-6px); border-color: var(--light-blue); }
         .card-img { height: 145px; background-size: cover; background-position: center; border-bottom: 1px solid var(--border); }
         .card-info { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .card-name { font-size: 12px; font-weight: 900; min-height: 24px; line-height: 1.2; margin-bottom: 12px; color: #fff; text-transform: uppercase; }
-        .card-btn { background: var(--light-blue); color: #000; padding: 12px; border-radius: 12px; text-align: center; font-size: 11px; font-weight: 900; text-decoration: none; display: block; border: none; cursor: pointer; }
+        .card-btn { background: var(--light-blue); color: #000; padding: 12px; border-radius: 12px; text-align: center; font-size: 11px; font-weight: 900; border: none; cursor: pointer; }
+        
         #loader { display: none; position: fixed; inset: 0; background: #000; z-index: 100; flex-direction: column; align-items: center; justify-content: center; }
         .spinner { width: 44px; height: 40px; border: 3px solid rgba(135, 206, 235, 0.1); border-top-color: var(--light-blue); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <div id="loader"><div class="spinner"></div><div style="color:var(--light-blue); font-weight:900; margin-top:24px; font-size:12px; letter-spacing:4px;">ENTERING SHOW...</div></div>
+    <div id="loader"><div class="spinner"></div><div style="color:var(--light-blue); font-weight:900; margin-top:24px; font-size:12px; letter-spacing:4px;">CONNECTING...</div></div>
+    
+    <div id="walletModal">
+        <div class="modal-card">
+            <div style="font-size: 22px; font-weight: 900; color: var(--light-blue);">SHOWTIME WALLET</div>
+            <div class="pack-item" onclick="launchCheckout()"><div><div style="font-size: 14px; font-weight: 800; text-align: left;">10,000 Coins</div></div><div class="pack-price">$9.99</div></div>
+            <div class="pack-item" onclick="launchCheckout()"><div><div style="font-size: 14px; font-weight: 800; text-align: left;">25,000 Coins</div></div><div class="pack-price">$24.99</div></div>
+            <div class="pack-item" onclick="launchCheckout()"><div><div style="font-size: 14px; font-weight: 800; text-align: left;">50,000 Coins</div></div><div class="pack-price">$49.99</div></div>
+            <button onclick="closeWallet()" style="margin-top: 24px; color: #555; background: none; border: none; font-weight: 800; cursor: pointer;">CANCEL</button>
+        </div>
+    </div>
+
     <div class="app-container">
-        <header><div class="logo">GAMESHOWS</div><div style="color: #10b981; font-size: 11px; font-weight: 900; border: 1.5px solid #10b981; padding: 3px 12px; border-radius: 99px;">LIVE NOW</div></header>
-        <input type="text" id="searchInput" class="search-input" placeholder="Search shows or tables..." onkeyup="filterGames()">
-        <div class="catalog"><button class="cat-btn active" onclick="setCategory('all', this)">All Shows</button><button class="cat-btn" onclick="setCategory('wheel', this)">Big Wheels</button><button class="cat-btn" onclick="setCategory('table', this)">Live Tables</button><button class="cat-btn" onclick="setCategory('slot', this)">Live Slots</button></div>
+        <header>
+            <div class="logo">GAMESHOWS</div>
+            <div class="wallet-pill" onclick="openWallet()"><div class="coin-icon"></div><div class="balance-text">240.50</div></div>
+        </header>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search shows..." onkeyup="filterGames()">
+        <div class="catalog"><button class="cat-btn active" onclick="setCategory('all', this)">All Shows</button><button class="cat-btn" onclick="setCategory('table', this)">Live Tables</button><button class="cat-btn" onclick="setCategory('wheel', this)">Big Wheels</button><button class="cat-btn" onclick="setCategory('slot', this)">Live Slots</button></div>
         <div class="grid" id="gameGrid">
             <div class="card" data-name="adventures beyond wonderland" data-type="wheel"><div class="card-img" style="background-image: url('https://sc02.alicdn.com/kf/A220b1ab9c2fd4d11ad59c3b840cc117cf.png')"></div><div class="card-info"><div class="card-name">BEYOND WONDERLAND</div><button onclick="launch('live-casino/game-shows/adventures-beyond-wonderland')" class="card-btn">ENTER SHOW</button></div></div>
             <div class="card" data-name="mega wheel live" data-type="wheel"><div class="card-img" style="background-image: url('https://sc02.alicdn.com/kf/Ad905669791fb43c9943a3332650e24fcg.png')"></div><div class="card-info"><div class="card-name">MEGA WHEEL LIVE</div><button onclick="launch('live-casino/game-shows/mega-wheel')" class="card-btn">ENTER SHOW</button></div></div>
             <div class="card" data-name="blackjack iconic21" data-type="table"><div class="card-img" style="background-image: url('https://sc02.alicdn.com/kf/A8d42cf44ffd345f59c8b423aec446ffbp.png')"></div><div class="card-info"><div class="card-name">7 SEATS BLACKJACK</div><button onclick="launch('live-casino/blackjack/mcLuck-blackjack')" class="card-btn">ENTER SHOW</button></div></div>
             <div class="card" data-name="spin a win live" data-type="wheel"><div class="card-img" style="background-image: url('https://sc02.alicdn.com/kf/Af73e2e0163074ea6a31ba6d0ae14afb7k.png')"></div><div class="card-info"><div class="card-name">SPIN A WIN LIVE</div><button onclick="launch('live-casino/game-shows/live-spin-a-win')" class="card-btn">ENTER SHOW</button></div></div>
-            <div class="card" data-name="american roulette live" data-type="table"><div class="card-img" style="background-image: url('https://sc02.alicdn.com/kf/Af3fdcdf212c544929ddd7922727ee4ff2.png')"></div><div class="card-info"><div class="card-name">AMERICAN ROULETTE</div><button onclick="launch('live-casino/roulette/mcluck-american-roulette')" class="card-btn">ENTER SHOW</button></div></div>
-            <div class="card" data-name="buffalo blitz live slots" data-type="slot"><div class="card-img" style="background-image: url('https://sc02.alicdn.com/kf/Ac0d00e15d33d434c9ea1d9f87c8c9ef5W.png')"></div><div class="card-info"><div class="card-name">BUFFALO BLITZ LIVE</div><button onclick="launch('live-casino/game-shows/buffalo-blitz-live-slots')" class="card-btn">ENTER SHOW</button></div></div>
         </div>
     </div>
     <script>
         function setCategory(type, btn) { document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); const cards = document.querySelectorAll('.card'); cards.forEach(card => { card.style.display = (type === 'all' || card.getAttribute('data-type') === type) ? 'flex' : 'none'; }); }
-        function filterGames() { const input = document.getElementById('searchInput').value.toLowerCase(); const cards = document.querySelectorAll('.card'); cards.forEach(card => { const name = card.getAttribute('data-name'); card.style.display = name.includes(input) ? 'flex' : 'none'; }); }
+        function filterGames() { const input = document.getElementById('searchInput').value.toLowerCase(); const cards = document.querySelectorAll('.card'); cards.forEach(card => { card.style.display = card.getAttribute('data-name').includes(input) ? 'flex' : 'none'; }); }
         function launch(path) { document.getElementById('loader').style.display = 'flex'; setTimeout(() => { window.location.href = `https://www.mcluck.com/games/${path}?r=6f535be9%2F2810840932`; }, 850); }
+        function openWallet() { document.getElementById('walletModal').style.display = 'flex'; }
+        function closeWallet() { document.getElementById('walletModal').style.display = 'none'; }
+        function launchCheckout() { document.getElementById('loader').style.display = 'flex'; setTimeout(() => { window.location.href = `https://www.mcluck.com/lp/raf?r=6f535be9%2F2810840932`; }, 800); }
     </script>
 </body>
 </html>
